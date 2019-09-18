@@ -40,6 +40,20 @@ public:
 		cout<<"You got "<<answerRight<<" out of "<<QuestionTotal;
 	}
 };
+class HanningWindow{
+	int windowsize;
+	int* array;
+	int arrSize;
+	int* filtArr;
+
+public:
+	HanningWindow(int win,int* arr,int size,int* filtered);
+	int WeightAvg(int arrIndex);
+	void PrintArray(bool x);
+	void WindowSize(int x);
+	void FilterArr(int* arr, int length);
+	void Graph(bool x);
+};
 #include<iostream>
 using namespace std;
 
@@ -50,4 +64,27 @@ int main(){
 	}
 	Test.Grade();
 	return 0;
+}
+HanningWindow::HanningWindow(int win,int* arr, int size, int* filtered){
+	windowsize=win;
+	array=arr;
+	arrSize=size;
+	filtArr=filtered;
+}
+int HanningWindow::WeightAvg(int arrIndex){
+	if(arrIndex<windowsize/2 || arrIndex>(arrSize-1)/2){
+
+	}
+}
+void HanningWindow::WindowSize(int x){
+	if(x%2 !=0){
+		windowsize=x-1;
+	}
+	else{
+		windowsize=x;
+	}
+	//Not done, need to call function 2. need to fix function 2
+}
+void HanningWindow::FilterArr(int* arr, int length){
+
 }
