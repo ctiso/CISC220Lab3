@@ -2,11 +2,12 @@
  * Lab3.cpp
  *
  *  Created on: Sep 12, 2019
- *      Author: tisoc
+ *      Author: tisoc and Bobby Stahl
  */
 
 #include<iostream>
 using namespace std;
+#include "header.hpp"
 #include <stdlib.h>
 #include <time.h>
 
@@ -37,7 +38,7 @@ public:
 		}
 	}
 	void Grade(){
-		cout<<"You got "<<answerRight<<" out of "<<QuestionTotal;
+		cout<<"You got "<<answerRight<<" out of "<<QuestionTotal<<endl;
 	}
 };
 class HanningWindow{
@@ -51,18 +52,31 @@ public:
 	int WeightAvg(int arrIndex);
 	void PrintArray(bool x);
 	void WindowSize(int x);
-	void FilterArr(int* arr, int length);
+	void FilterArr();
 	void Graph(bool x);
 };
 #include<iostream>
 using namespace std;
 
 int main(){
-	MathQuiz Test(3);
+	/*MathQuiz Test(3);
 	for(int i=0;i<10;i++){
 		Test.Question();
 	}
 	Test.Grade();
+*/
+
+
+
+
+
+
+	 Box Box1(3.3, 1.2, 1.5);
+	 Box Box2(8.5, 6.0, 2.0);
+	 Box Box3 = Box1 + Box2;
+	 double volume = Box3.getVolume();
+	 cout << "Vol. of Box3 : " << volume<<endl;
+	Box1==Box2;
 	return 0;
 }
 HanningWindow::HanningWindow(int win,int* arr, int size, int* filtered){
@@ -72,8 +86,22 @@ HanningWindow::HanningWindow(int win,int* arr, int size, int* filtered){
 	filtArr=filtered;
 }
 int HanningWindow::WeightAvg(int arrIndex){
-	if(arrIndex<windowsize/2 || arrIndex>(arrSize-1)/2){
-
+	int avg=0;
+	if(arrIndex<(windowsize/2) || arrIndex>((arrSize-1)/2)){
+		return avg;
+	}
+	else{
+		int step=2;
+		int IndexWeight=(windowsize/2)+1;
+		avg+=array[arrIndex]*IndexWeight;
+		for(int i=arrIndex+1;i<(arrIndex+(windowsize/2));i++){
+			IndexWeight--;
+			avg+=IndexWeight*array[i];
+			avg+=IndexWeight*array[i-step];
+			step+=2;
+		}
+		int Weightaverage=avg/windowsize;
+		return Weightaverage;
 	}
 }
 void HanningWindow::WindowSize(int x){
@@ -83,8 +111,59 @@ void HanningWindow::WindowSize(int x){
 	else{
 		windowsize=x;
 	}
-	//Not done, need to call function 2. need to fix function 2
+	FilterArr();
 }
-void HanningWindow::FilterArr(int* arr, int length){
+void HanningWindow::FilterArr(){
+	for(int i=0;i<arrSize;i++){
+		filtArr[i]=WeightAvg(i);
+	}
+}
+void HanningWindow::Graph(bool x){
+	int* graphArray;
+	if(x==true){
+		graphArray=filtArr;
+	}
+	else{
+		graphArray=array;
+	}
+	int high=graphArray[0];
+	for(int i=0;i<arrSize;i++){
+		if(high<graphArray[i]){
+			high=graphArray[i];
+		}
+	}
+	int low=graphArray[0];
+	for(int i=0;i<arrSize;i++){
+		if(low>graphArray[i]){
+				low=graphArray[i];
+			}
+		}
 
+	int distance=high-low;
+	for(int i=0;i<=distance;i++){
+			cout<<high-i<<":";
+			int number=high-i;
+			for(int j=0;j<arrSize;j++){
+				if(graphArray[j]==number){
+					cout<<"*";
+				}
+				else{
+					cout<<" ";
+				}
+			}
+			cout<<endl;
+		}
+}
+void HanningWindow::PrintArray(bool x){
+	if(x==true){
+		for(int i=0;i<arrSize;i++){
+			cout<<filtArr[i]<<",";
+		}
+		cout<<endl;
+	}
+	else{}
+	for(int i=0;i<arrSize;i++){
+				cout<<array[i]<<",";
+			}
+			cout<<endl;
 }
