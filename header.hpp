@@ -21,6 +21,7 @@ public:
 	bool isBoardFull();
 	bool WinCheck(char x);
 	void Play(char x);
+	~TicTacToe();
 };
 
 
