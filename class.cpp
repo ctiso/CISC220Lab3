@@ -75,7 +75,7 @@ void TicTacToe::Play(char x) {
 	int row;
 	int col;
 	bool gameover = false;
-	char winner = 'y';
+	char winner = 'a';
 	while (gameover == false) {
 		if (WinCheck('x') == true) {
 			gameover = true;
