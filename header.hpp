@@ -10,7 +10,7 @@
 #include <string>
 
 class TicTacToe {
-	char arr[3][3];
+	char** board;
 	std::string player1;
 	std::string player2;
 public:

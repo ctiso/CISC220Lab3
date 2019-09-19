@@ -9,25 +9,31 @@
 using namespace std;
 
 TicTacToe::TicTacToe(string play1, string play2) {
-	arr[3][3];
+	board=new char*[3];
+		for(int i=0;i<3;i++){
+			board[i]=new char[3];
+		}
 	player1 = play1;
 	player2 = play2;
+	this->Initialize();
+
 }
 
 void TicTacToe::Initialize() {
 	for (int row = 0; row<3;row++) {
 			for (int col = 0; col<3;col++) {
-				arr[row][col] = '_';
+				this ->board[row][col] = '_';
 			}
 	}
 }
 TicTacToe::~TicTacToe(){
+	delete board;
 	cout<<"Game has been Destroyed"<<endl;
 }
 void TicTacToe::Print() {
 	for (int row = 0; row<3;row++) {
 				for (int col = 0; col<3;col++) {
-					cout<< arr[row][col]<<"\t";
+					cout<< board[row][col]<<"\t";
 				}
 				cout<<endl;
 				cout<<endl;
@@ -38,7 +44,7 @@ bool TicTacToe::isBoardFull() {
 	int count = 0;
 		for (int row = 0; row<3;row++) {
 			for (int col = 0; col<3;col++) {
-				if (arr[row][col] == 'x' || arr[row][col]=='o') {
+				if (board[row][col] == 'x' || board[row][col]=='o') {
 					count++;
 				}
 			}
@@ -53,25 +59,27 @@ bool TicTacToe::WinCheck(char x) {
 	bool check = false;
 	if (x=='x'||x=='o') {
 		for (int horz = 0; horz<3;horz++) {
-			if (arr[horz][0] == arr[horz][1] && arr[horz][0] == arr[horz][2] && arr[horz][0] != '_') {
+			if (board[horz][0] == board[horz][1] && board[horz][0] == board[horz][2] && board[horz][0] != '_') {
 				check = true;
 			}
 		}
 		for (int vert = 0; vert<3;vert++) {
-			if (arr[0][vert] == arr[1][vert] && arr[0][vert] == arr[2][vert] && arr[0][vert] != '_') {
+			if (board[0][vert] == board[1][vert] && board[0][vert] == board[2][vert] && board[0][vert] != '_') {
 				check = true;
 			}
 		}
-		for (int diag = 0; diag<3;diag++) {
-			if (arr[0][0] == arr[1][1] && arr[0][0] == arr[2][2] && arr[0][0] != '_') {
-				check = true;
+
+		if (board[0][0] == board[1][1] && board[0][0] == board[2][2] && board[0][0] != '_') {
+			check = true;
 		}
-		}
+		if(board[0][2] == board[1][1] && board[0][2] == board[2][0] && board[0][2] != '_') {
+			check = true;
 	}
 	else {
 		cout<<"You must enter an 'x' or 'o'"<<endl;
 	}
 	return check;
+	}
 }
 void TicTacToe::Play(char x) {
 	int row;
@@ -79,6 +87,11 @@ void TicTacToe::Play(char x) {
 	bool gameover = false;
 	char winner = 'a';
 	while (gameover == false) {
+		if (isBoardFull() == true) {
+					gameover = true;
+					cout<<"Draw"<<endl;
+					break;
+				}
 		if (WinCheck('x') == true) {
 			gameover = true;
 			winner = 'x';
@@ -88,13 +101,13 @@ void TicTacToe::Play(char x) {
 		cin >> row;
 		cout<<player1<<" please input a column: "<<endl;
 		cin >> col;
-		if (arr[row][col] == '_') {
+		if (board[row][col] == '_') {
 			for (int i = 0;i<3;i++) {
 				for (int j = 0;j<3;j++) {
-					if (arr[i][j] == arr[row][col]) {
-						arr[row][col] = 'x';
+					if (board[i][j] == board[row][col]) {
+						board[row][col] = 'x';
 						}
-						}
+					}
 			}
 			Print();
 			}
@@ -110,11 +123,11 @@ void TicTacToe::Play(char x) {
 		cin >> row;
 		cout<<player2<<" please input a column: "<<endl;
 		cin >> col;
-		if (arr[row][col] == '_') {
+		if (board[row][col] == '_') {
 			for (int i = 0;i<3;i++) {
 				for (int j = 0;j<3;j++) {
-					if (arr[i][j] == arr[row][col]) {
-				arr[row][col] = 'o';
+					if (board[i][j] == board[row][col]) {
+						board[row][col] = 'o';
 					}
 					}
 				}
@@ -122,11 +135,6 @@ void TicTacToe::Play(char x) {
 			}
 		else {
 			cout<<"This place is already taken"<<endl;
-		}
-		if (isBoardFull() == true) {
-			gameover = true;
-			cout<<"Draw"<<endl;
-			break;
 		}
 	}
 		if (winner == 'x') {
