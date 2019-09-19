@@ -7,6 +7,22 @@
 
 #ifndef HEADER_HPP_
 #define HEADER_HPP_
+#include <string>
+
+class TicTacToe {
+	char arr[3][3];
+	std::string player1;
+	std::string player2;
+public:
+	TicTacToe(std::string p, std::string p2);
+	void Initialize();
+	void Print();
+	void PrintFilter();
+	bool isBoardFull();
+	bool WinCheck(char x);
+	void Play(char x);
+};
+
 
 class Box {
  double length;

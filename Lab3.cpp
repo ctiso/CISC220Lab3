@@ -10,6 +10,8 @@ using namespace std;
 #include "header.hpp"
 #include <stdlib.h>
 #include <time.h>
+#include <cmath>
+
 
 class MathQuiz{
 	int testNum;
@@ -57,26 +59,51 @@ public:
 };
 #include<iostream>
 using namespace std;
-
+void Stars();
 int main(){
-	/*MathQuiz Test(3);
-	for(int i=0;i<10;i++){
+	srand(time(NULL));
+	MathQuiz Test(3);//sets the number to be quized om
+	for(int i=0;i<10;i++){	//Runs a multiplication test with the number given and goes through 10 times
 		Test.Question();
 	}
-	Test.Grade();
-*/
+	Test.Grade();//prints out score of quiz
 
 
+	int normal[7]={1,4,5,6,3,7,8};
+	int other[7];
+	HanningWindow HanArr(3,normal,7,other);//initializes a hanning window object
+	HanArr.WeightAvg(3);//gives the weighted average of the window at the index put into it
+	HanArr.FilterArr();//makes the array of weighted averages for the whole array
+	Stars();
+	HanArr.PrintArray(true);//Prints filtered array when true
+	Stars();
+	HanArr.PrintArray(false);//Prints original array when false
+	Stars();
+	HanArr.Graph(true);//graphs filtered array when true
+	Stars();
+	HanArr.Graph(false);//graphs original array when true
+	Stars();
+	HanArr.WindowSize(5);//This changes the window size to whatever number put in
+	HanArr.PrintArray(true);//Dont need to recall filter arr because WindowSize does it already
+	Stars();
+	HanArr.PrintArray(false);
+	Stars();
+	HanArr.Graph(true);
+	Stars();
+	HanArr.Graph(false);
 
+	TicTacToe Game("Bobby","Chris");
+	Game.Initialize();//Initializes the game board to have underscores
+	Game.Print();//Prints out the gameboard
+	Game.Play('x');//The game starts
+	Stars();
+	Box Box1(3.3, 1.2, 1.5);//Initializes the boxes
+	Box Box2(8.5, 6.0, 2.0);
+	Box Box3 = Box1 + Box2;//this comes from the lab sheet
+	double volume = Box3.getVolume();
+	cout << "Vol. 2of Box3 : " << volume<<endl;
+	Box1==Box2;//Shows that == does the opposite of what it normally does
 
-
-
-	 Box Box1(3.3, 1.2, 1.5);
-	 Box Box2(8.5, 6.0, 2.0);
-	 Box Box3 = Box1 + Box2;
-	 double volume = Box3.getVolume();
-	 cout << "Vol. of Box3 : " << volume<<endl;
-	Box1==Box2;
 	return 0;
 }
 HanningWindow::HanningWindow(int win,int* arr, int size, int* filtered){
@@ -87,8 +114,8 @@ HanningWindow::HanningWindow(int win,int* arr, int size, int* filtered){
 }
 int HanningWindow::WeightAvg(int arrIndex){
 	int avg=0;
-	if(arrIndex<(windowsize/2) || arrIndex>((arrSize-1)/2)){
-		return avg;
+	if(arrIndex<(windowsize/2) || arrIndex>((arrSize-1)-(windowsize/2))){
+		return 0;
 	}
 	else{
 		int step=2;
@@ -161,9 +188,13 @@ void HanningWindow::PrintArray(bool x){
 		}
 		cout<<endl;
 	}
-	else{}
+	else{
 	for(int i=0;i<arrSize;i++){
 				cout<<array[i]<<",";
 			}
 			cout<<endl;
+	}
+}
+void Stars(){
+	cout<<"********"<<endl;
 }
