@@ -52,8 +52,8 @@ bool TicTacToe::isBoardFull() {
 		if (count == 9) {
 					return true;
 				}
-		else
-			return false;
+
+		return false;
 }
 bool TicTacToe::WinCheck(char x) {
 	bool check = false;
@@ -75,76 +75,83 @@ bool TicTacToe::WinCheck(char x) {
 		if(board[0][2] == board[1][1] && board[0][2] == board[2][0] && board[0][2] != '_') {
 			check = true;
 	}
-	else {
+	/*else {
 		cout<<"You must enter an 'x' or 'o'"<<endl;
 	}
-	return check;
+
+	*/
 	}
+	return check;
 }
-void TicTacToe::Play(char x) {
+
+void TicTacToe::Person(char x){
+	string player;
+	bool full=true;
 	int row;
 	int col;
+	if(x=='x'){
+		player=player1;
+	}
+	else{
+		player=player2;
+	}
+	cout<< player<<" please input a row:(0,1,2) "<<endl;
+	cin >> row;
+	cout<<player<<" please input a column:(0,1,2) "<<endl;
+	cin >> col;
+	if(board[row][col]=='_'){
+		full=false;
+	}
+	while(full){
+		cout<< "This place is already taken" << endl;
+		cout<< player<<" please input a row:(0,1,2) "<<endl;
+		cin >> row;
+		cout<<player<<" please input a column:(0,1,2) "<<endl;
+		cin >> col;
+		if(board[row][col]=='_'){
+				full=false;
+			}
+	}
+	board[row][col]=x;
+	Print();
+}
+void TicTacToe::Play(char x) {
 	bool gameover = false;
 	char winner = 'a';
+	char playerChar='x';
 	while (gameover == false) {
+		Person(playerChar);
 		if (isBoardFull() == true) {
-					gameover = true;
-					cout<<"Draw"<<endl;
-					break;
-				}
+				gameover = true;
+				cout<<"Draw"<<endl;
+				break;
+			}
 		if (WinCheck('x') == true) {
 			gameover = true;
 			winner = 'x';
 			break;
 		}
-		cout<< player1<<" please input a row: "<<endl;
-		cin >> row;
-		cout<<player1<<" please input a column: "<<endl;
-		cin >> col;
-		if (board[row][col] == '_') {
-			for (int i = 0;i<3;i++) {
-				for (int j = 0;j<3;j++) {
-					if (board[i][j] == board[row][col]) {
-						board[row][col] = 'x';
-						}
-					}
-			}
-			Print();
-			}
-		else {
-			cout<< "This place is already taken" << endl;
-		}
 		if (WinCheck('o') == true) {
-			gameover = true;
-			winner = 'o';
-			break;
-		}
-		cout<< player2 <<" please input a row: "<<endl;
-		cin >> row;
-		cout<<player2<<" please input a column: "<<endl;
-		cin >> col;
-		if (board[row][col] == '_') {
-			for (int i = 0;i<3;i++) {
-				for (int j = 0;j<3;j++) {
-					if (board[i][j] == board[row][col]) {
-						board[row][col] = 'o';
-					}
-					}
-				}
-			Print();
+				gameover = true;
+				winner = 'o';
+				break;
 			}
-		else {
-			cout<<"This place is already taken"<<endl;
+		if(playerChar=='x'){
+			playerChar='o';
 		}
-	}
-		if (winner == 'x') {
-		cout<< player2 <<" wins"<<endl;
+		else{
+			playerChar='x';
 		}
-		if (winner == 'o') {
-			cout<< player1 <<" wins"<<endl;
-	}
-}
 
+}
+	if (winner == 'x') {
+		cout<< player1 <<" wins"<<endl;
+		}
+	if (winner == 'o') {
+		cout<< player2 <<" wins"<<endl;
+	}
+	Print();
+}
 Box::Box(double l, double b, double h) {
  length = l;
  breadth = b;

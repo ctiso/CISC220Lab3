@@ -95,7 +95,7 @@ int main(){
 	TicTacToe Game("Bobby","Chris");
 	Game.Initialize();//Initializes the game board to have underscores
 	Game.Print();//Prints out the gameboard
-	Game.Play('x');//The game starts
+	Game.Play('o');//The game starts
 	Stars();
 	Box Box1(3.3, 1.2, 1.5);//Initializes the boxes
 	Box Box2(8.5, 6.0, 2.0);

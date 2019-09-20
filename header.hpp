@@ -17,9 +17,9 @@ public:
 	TicTacToe(std::string p, std::string p2);
 	void Initialize();
 	void Print();
-	void PrintFilter();
 	bool isBoardFull();
 	bool WinCheck(char x);
+	void Person(char x);
 	void Play(char x);
 	~TicTacToe();
 };
